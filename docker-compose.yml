@@ -1,0 +1,15 @@
+services:
+  agent-bridge:
+    build: .
+    image: agent-bridge:1.0.0
+    container_name: agent-bridge
+    # Bound to localhost by default because the API is unauthenticated.
+    # Change to "0.0.0.0:8765:8765" only on a trusted, isolated network.
+    ports:
+      - "127.0.0.1:8765:8765"
+    volumes:
+      - agent-bridge-data:/data
+    restart: unless-stopped
+
+volumes:
+  agent-bridge-data:

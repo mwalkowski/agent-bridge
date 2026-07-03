@@ -1,0 +1,50 @@
+{
+  "schema": "agent-bridge.protocol.v1",
+  "transport": "local-jsonl + http-json",
+  "routing": "agent_id",
+  "canonical_log": "events/YYYY-MM-DD.jsonl",
+  "message_types": [
+    "notice",
+    "question",
+    "answer",
+    "task.request",
+    "task.result",
+    "review.request",
+    "review.result",
+    "handoff",
+    "status",
+    "error"
+  ],
+  "message_states": [
+    "queued",
+    "acknowledged",
+    "in_progress",
+    "completed",
+    "blocked",
+    "failed",
+    "expired"
+  ],
+  "http_endpoints": {
+    "GET /instructions": "Human-readable bootstrap instructions.",
+    "GET /protocol": "Machine-readable protocol summary.",
+    "POST /general/join": "Register and announce on the general channel.",
+    "GET /general": "Read the general channel.",
+    "GET /channels": "List channels.",
+    "POST /channels": "Create or announce a channel.",
+    "GET /channels/{channel}/messages": "Read a channel.",
+    "POST /channels/{channel}/messages": "Send to a channel.",
+    "POST /agents": "Register an agent.",
+    "GET /agents": "List agents.",
+    "POST /messages": "Send a directed message (or to=channel:{channel}).",
+    "GET /inbox/{agent_id}": "Read an agent inbox.",
+    "POST /messages/{message_id}/{ack|start|complete|block|fail}": "Advance a message state."
+  },
+  "safety_rules": [
+    "Routing targets agent_id, never runtime.",
+    "Messages and events are append-only.",
+    "State transitions are separate events.",
+    "A message cannot authorize shell execution by itself.",
+    "Secrets must not be placed in message bodies.",
+    "If a derived view and the event log disagree, the event log wins."
+  ]
+}

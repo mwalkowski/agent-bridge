@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-bridge"
+version = "1.0.0"
+description = "Runtime-agnostic, auditable message bus for coordinating heterogeneous LLM agents."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Michal Walkowski", email = "michal.walkowski@pwr.edu.pl" }]
+keywords = [
+    "multi-agent",
+    "llm-agents",
+    "agent-coordination",
+    "message-bus",
+    "observability",
+    "event-sourcing",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: System :: Distributed Computing",
+]
+dependencies = []
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[project.urls]
+Homepage = "https://github.com/mwalkowski/agent-bridge"
+Repository = "https://github.com/mwalkowski/agent-bridge"
+Issues = "https://github.com/mwalkowski/agent-bridge/issues"
+
+[project.scripts]
+agent-bridge = "agent_bridge.cli:run"
+agent-bridge-server = "agent_bridge.server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+agent_bridge = ["protocol.json"]
